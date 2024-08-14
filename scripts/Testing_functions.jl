@@ -570,6 +570,7 @@ function plots_dtw_test_sig2(BaseName, Number, Channel, Templates)
 end
 
 #===Сплошное тестирвоание===#
+using JLD2, Plots
 include("../src/Readers.jl")
 import .Readers as rd
 include("../src/DTWfunc.jl")
@@ -613,7 +614,7 @@ Un_Templates2 = Union_Templates(Un_Templates, Neww2)
 length(Un_Templates2)
 New_Tabel2, res = st.evaluation_classifiers("ALL", Un_Templates2, QRS_true, 60, "False")
 res
-BB = SAVE_temps(Un_Templates2, QRS_true, res)
+#BB = SAVE_temps(Un_Templates2, QRS_true, res)
 Result_Templates = BB
 #@save "src/Test/Result_Templates_5.jld2" Result_Templates
 @load "src/Test/Result_Templates_5.jld2" Result_Templates ; Result_Templates#их 189
@@ -687,9 +688,14 @@ QRS_true[31][4]
 QRS_true[47][1]
 s1
 mass_Q
-plot(mass_Q[11])
+plot(mass_Q[1:12])
 
-si = mass_QR[9]; plot(si)
+##
+# 
+# 
+#
+BaseName = "CSE"
+si = mass_Q[26]; plot(si)
 Space, Numb, Chan = 40, 0, 0
 for N in 1:60
 Names_files, signals_channel, Frequency, Ref_qrs = rd.Signal_all_channels(BaseName, N)
@@ -703,10 +709,10 @@ Names_files, signals_channel, Frequency, Ref_qrs = rd.Signal_all_channels(BaseNa
     end
 end
 
-Names_files, signals_channel, Frequency, Ref_qrs = rd.Signal_all_channels(BaseName, 15)
-Space = 100
+Names_files, signals_channel, Frequency, Ref_qrs = rd.Signal_all_channels(BaseName, Numb)
+Space = 50
 
-plot(signals_channel[3][Ref_qrs[1]-Space:Ref_qrs[2]+Space]); vline!([Space, Ref_qrs[2]-Ref_qrs[1]+Space])
+plot(signals_channel[Chan][Ref_qrs[1]-Space:Ref_qrs[2]+Space]); vline!([Space, Ref_qrs[2]-Ref_qrs[1]+Space])
 
 
 mass_Q
